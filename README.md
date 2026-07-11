@@ -51,7 +51,7 @@ global-governance-engine/
 ├── PLANNING.md                   # Definitive strategic project roadmap
 └── README.md                     # Technical implementation documentation
 
-🚀 Getting Started
+<h3>🚀 Getting Started</h3>
 1. Environment Setup
 Clone the repository and initialize your local virtual environment within the backend/ path:
 
@@ -72,7 +72,7 @@ To run the automated collection loop and push a fresh live entry block straight 
 
 Bash
 python run_engine.py
-⏳ Coming Soon Features
+<h3>⏳ Coming Soon Features</h3>
 The project is moving steadily through its evolutionary prototyping lifecycle. The following milestones are actively under development:
 
 🔹 FastAPI Application Layer (backend/main.py)
