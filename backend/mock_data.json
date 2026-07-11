@@ -1,0 +1,18 @@
+{
+    "anomaly": {
+      "target_app": "WhatsApp",
+      "failure_type": "dns_blocking",
+      "country_code": "IR",
+      "timestamp": "2026-07-11T10:15:00Z"
+    },
+    "headlines": [
+      {
+        "headline": "Protests escalate in Tehran over new digital tax laws, citizens report messaging blackouts.",
+        "source_url": "https://example.com/tehran-protests"
+      },
+      {
+        "headline": "Telecommunication Ministry restricts international bandwidth amid civil unrest.",
+        "source_url": "https://example.com/telecom-limits"
+      }
+    ]
+  }

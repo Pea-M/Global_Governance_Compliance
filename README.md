@@ -1,1 +1,0 @@
-# Global_Governance_Compliance
