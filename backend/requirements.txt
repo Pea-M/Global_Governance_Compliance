@@ -1,0 +1,1 @@
+# Python dependencies for the backend (FastAPI, httpx, supabase-py, etc.) — to be filled in
