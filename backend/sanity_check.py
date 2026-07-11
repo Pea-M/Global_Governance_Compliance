@@ -21,3 +21,17 @@
 # # Read it back
 # read_result = supabase.table("anomaly_events").select("*").execute()
 # print("Current rows:", read_result.data)
+# import os
+# from dotenv import load_dotenv
+
+# # This loads your .env file
+# load_dotenv()
+
+# # This checks if the keys are actually being seen by the python interpreter
+# supabase_url = os.getenv("SUPABASE_URL")
+# gemini_key = os.getenv("GEMINI_API_KEY")
+
+# if supabase_url and gemini_key:
+#     print("✅ Environment is READY. All keys detected.")
+# else:
+#     print("❌ Environment is NOT DONE. Check your .env file.")

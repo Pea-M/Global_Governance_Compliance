@@ -50,8 +50,12 @@ def normalize_ooni_result(m: dict) -> dict:
     }
 
 
+import time # <--- ADD THIS
+
 def fetch_gdelt_headlines(country_code_fips: str, max_records: int = 5) -> list[dict]:
     url = "https://api.gdeltproject.org/api/v2/doc/doc"
+    # Adding a header to identify as a browser, which reduces block probability
+    headers = {'User-Agent': 'Mozilla/5.0'} 
     params = {
         "query": f"sourcecountry:{country_code_fips}",
         "mode": "artlist",
@@ -59,38 +63,26 @@ def fetch_gdelt_headlines(country_code_fips: str, max_records: int = 5) -> list[
         "format": "json",
         "timespan": "24h",
     }
-    resp = requests.get(url, params=params, timeout=20)
+    # Pass the headers here
+    resp = requests.get(url, params=params, headers=headers, timeout=20)
+    
+    if resp.status_code == 429:
+        print("⚠️ GDELT Rate limited! Sleeping for 10 seconds...")
+        time.sleep(10) # Wait 10 seconds and retry
+        resp = requests.get(url, params=params, headers=headers, timeout=20)
+        
     resp.raise_for_status()
     return resp.json().get("articles", [])
 
 
 if __name__ == "__main__":
-    print("=== OONI anomalies (normalized) ===")
+    print("=== OONI anomalies (normalized validation) ===")
     ooni_data = fetch_ooni_anomalies(COUNTRY_CODE_ISO)
-    print(f"{len(ooni_data)} raw results")
+    print(f"{len(ooni_data)} raw results fetched.")
     normalized = [normalize_ooni_result(m) for m in ooni_data]
-    for n in normalized[:3]:
-        print(n)
+    if normalized:
+        print("Sample normalized output:", normalized[0])
 
-    print("\n=== GDELT headlines ===")
+    print("\n=== GDELT headlines (validation) ===")
     gdelt_data = fetch_gdelt_headlines(COUNTRY_CODE_FIPS)
-    print(f"{len(gdelt_data)} results")
-
-    supabase = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
-
-    # Insert the anomaly, capture its generated id
-    anomaly_insert = supabase.table("anomaly_events").insert(normalized[0]).execute()
-    anomaly_id = anomaly_insert.data[0]["id"]
-    print("Inserted anomaly, id:", anomaly_id)
-
-    # Link every GDELT headline to that anomaly
-    news_rows = [
-        {
-            "anomaly_id": anomaly_id,
-            "headline": a["title"],
-            "source_url": a["url"],
-        }
-        for a in gdelt_data
-    ]
-    news_insert = supabase.table("news_contexts").insert(news_rows).execute()
-    print(f"Inserted {len(news_insert.data)} news_contexts rows.")
+    print(f"{len(gdelt_data)} live results fetched.")
