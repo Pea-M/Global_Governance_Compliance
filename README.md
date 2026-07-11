@@ -1,14 +1,14 @@
-Global Governance & Compliance Engine
+<h1>Global Governance & Compliance Engine</h1>
 An automated data and intelligence pipeline that converts raw, chaotic internet-censorship signals into structured, predictive risk analysis. By cross-referencing live network anomalies with regional news events, the engine autonomously tracks digital sovereignty blockages and maps them to international legal frameworks. The platform transforms descriptive infrastructure data into prescriptive policy adjustments and tactical workarounds in seconds instead of days.
 
-🎯 Project Overview
+<h2>🎯 Project Overview</h2>
 This engine serves two primary user archetypes who depend on rapid, high-fidelity digital intelligence:
 
 Corporate & Supply-Chain Risk Managers: Professionals who require early-warning infrastructure alerts before critical communication drops impact localized manufacturing hubs or logistics routes.
 
 Policy Makers, NGOs, & Human-Rights Auditors: Organizations seeking real-time, technically-backed, and immutable digital proof of structural treaty violations on the ground.
 
-🏗️ Technical Architecture & Data Models
+<h2>🏗️ Technical Architecture & Data Models</h2>
 The core application follows a decoupled structural footprint. The processing loop runs on a cloud schedule to ingest data and update records, keeping the frontend entirely read-only and lightning-fast.
 
 Data relationships follow a one-to-many cascading model inside our relational Postgres database cluster:
@@ -24,7 +24,7 @@ compliance_reports (The Prescriptive Intelligence): Stores the singular, highly 
   [ GDELT API ]   ──>  [ news_contexts ]   ──( FK )──> [ Gemini 3.5 Flash Oracle ] ──> [ compliance_reports ]
                                                  │
   [ TREATIES ]    ──>  ( Static Matrix )   ──────┘
-⚡ Current Progress (Achieved & Pushed to GitHub)
+<h2>⚡ Current Progress (Achieved & Pushed to GitHub)</h2>
 Phase 1 of the core automation engine is complete, tested, and fully committed to the repository:
 
 Live Data Ingestion Pipeline (scraper.py): Fully integrated with the Open Observatory of Network Interference (OONI) API and the Global Database of Events, Language, and Tone (GDELT) API. Includes customized user-agent formatting and dynamic rate-limiting cooling parameters to manage API connection stability.
@@ -35,7 +35,7 @@ Relational Cloud Integration (run_engine.py): A unified orchestrator that execut
 
 Isolated Environment Foundations: Standardized via dedicated local virtual environments (venv/) and structured modular schemas, ensuring full security decoupling via locally managed .env keys.
 
-📂 Repository Directory Tree
+<h2>📂 Repository Directory Tree</h2>
 Plaintext
 global-governance-engine/
 ├── .github/
@@ -50,6 +50,7 @@ global-governance-engine/
 │   └── scraper.py                # Normalized OONI & GDELT client modules
 ├── PLANNING.md                   # Definitive strategic project roadmap
 └── README.md                     # Technical implementation documentation
+
 🚀 Getting Started
 1. Environment Setup
 Clone the repository and initialize your local virtual environment within the backend/ path:
