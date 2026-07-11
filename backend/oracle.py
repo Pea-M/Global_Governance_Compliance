@@ -1,6 +1,5 @@
 import os
 import json
-import google.generativeai as genai
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
@@ -29,18 +28,16 @@ class ComplianceAnalysis(BaseModel):
     tactical_solution: str = Field(description="Clear, practical, highly actionable local workaround instructions for citizens or businesses to bypass this technical drop.")
     policy_reform: str = Field(description="Strategic, high-level governance structural recommendations auditing the implementation gap and actions needed.")
 
+from google import genai
+from google.genai import types
+
 def generate_compliance_brief(anomaly: dict, headlines: list[dict]) -> dict:
-    """
-    Takes a normalized anomaly event and matching GDELT news context,
-    cross-references them with international treaties, and returns a structured AI audit.
-    """
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
-        raise ValueError("❌ Missing GEMINI_API_KEY in environment variables.")
-    
-    genai.configure(api_key=api_key)
-    
-    # Format inputs for the prompt
+        raise ValueError("Missing GEMINI_API_KEY in environment variables.")
+
+    client = genai.Client(api_key=api_key)
+
     news_text = "\n".join([f"- Title: {h.get('headline')} (Source: {h.get('source_url')})" for h in headlines])
     treaties_text = json.dumps(TREATY_FRAMEWORKS, indent=2)
     
@@ -67,19 +64,17 @@ def generate_compliance_brief(anomaly: dict, headlines: list[dict]) -> dict:
     4. Guardrail: Rely strictly on the technical data and news context provided. Avoid generic conversational fluff.
     """
 
-    # Using Gemini 1.5 Flash for fast, structured output
-    model = genai.GenerativeModel("gemini-3.5-flash")
-    
-    response = model.generate_content(
-        prompt,
-        generation_config={
-            "response_mime_type": "application/json",
-            "response_schema": ComplianceAnalysis,
-        }
+
+    response = client.models.generate_content(
+        model="gemini-3.5-flash",
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            response_mime_type="application/json",
+            response_schema=ComplianceAnalysis,
+        ),
     )
-    
-    # Return the clean, validated JSON dictionary
     return json.loads(response.text)
+    
 
 # =====================================================================
 # TESTING BLOCK: Runs only if you execute `python oracle.py` directly

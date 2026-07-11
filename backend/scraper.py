@@ -1,10 +1,6 @@
 import requests
 from datetime import datetime, timedelta, timezone
 # temporary, don't leave this in scraper.py permanently
-from supabase import create_client
-import os
-from dotenv import load_dotenv
-load_dotenv()
 COUNTRY_CODE_ISO = "IR"
 COUNTRY_CODE_FIPS = "IR"
 
