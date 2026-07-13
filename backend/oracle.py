@@ -31,7 +31,9 @@ class ComplianceAnalysis(BaseModel):
 from google import genai
 from google.genai import types
 
-def generate_compliance_brief(anomaly: dict, headlines: list[dict]) -> dict:
+import time
+
+def generate_compliance_brief(anomaly: dict, headlines: list[dict], max_retries: int = 3) -> dict:
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         raise ValueError("Missing GEMINI_API_KEY in environment variables.")
@@ -40,9 +42,8 @@ def generate_compliance_brief(anomaly: dict, headlines: list[dict]) -> dict:
 
     news_text = "\n".join([f"- Title: {h.get('headline')} (Source: {h.get('source_url')})" for h in headlines])
     treaties_text = json.dumps(TREATY_FRAMEWORKS, indent=2)
-    
-    prompt = f"""
-    You are an expert Autonomous Geopolitical Risk & International Law Compliance AI.
+
+    prompt = f""" You are an expert Autonomous Geopolitical Risk & International Law Compliance AI.
     Your task is to analyze a technical digital network anomaly against ongoing regional context and international frameworks.
 
     === TECHNICAL ANOMALY DETECTED ===
@@ -61,20 +62,29 @@ def generate_compliance_brief(anomaly: dict, headlines: list[dict]) -> dict:
     1. Determine if the technical failure type combined with the local context constitutes a violation of the referenced international laws.
     2. Synthesize a practical, immediate 'tactical_solution' explaining how an enterprise or user on the ground can bypass or mitigate this block (e.g., specific routing, decentralized protocols, alternate tooling).
     3. Generate a macro-level governance and policy critique ('policy_reform') indicating what oversight rules have failed and what remediation is required.
-    4. Guardrail: Rely strictly on the technical data and news context provided. Avoid generic conversational fluff.
-    """
+    4. Guardrail: Rely strictly on the technical data and news context provided. Avoid generic conversational fluff. """ # unchanged
 
+    last_error = None
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-3.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    response_schema=ComplianceAnalysis,
+                ),
+            )
+            return json.loads(response.text)
+        except Exception as e:
+            last_error = e
+            if attempt < max_retries - 1:
+                wait = 5 * (attempt + 1)
+                print(f"⚠️ Gemini call failed (attempt {attempt+1}/{max_retries}): {e}. Retrying in {wait}s...")
+                time.sleep(wait)
+    assert last_error is not None
+    raise last_error
 
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=ComplianceAnalysis,
-        ),
-    )
-    return json.loads(response.text)
-    
 
 # =====================================================================
 # TESTING BLOCK: Runs only if you execute `python oracle.py` directly
