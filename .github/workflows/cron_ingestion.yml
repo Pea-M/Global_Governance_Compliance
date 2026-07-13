@@ -1,1 +1,25 @@
 # GitHub Actions cron workflow: triggers the ingestion pipeline on a schedule
+name: Daily Ingestion Pipeline
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # 6 AM UTC daily
+  workflow_dispatch:        # lets you trigger manually from the Actions tab
+
+jobs:
+  run-engine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: python run_engine.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
