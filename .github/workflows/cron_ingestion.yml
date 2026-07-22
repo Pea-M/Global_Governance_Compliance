@@ -1,9 +1,9 @@
 # GitHub Actions cron workflow: triggers the ingestion pipeline on a schedule
 name: Daily Ingestion Pipeline
 
-on:
-  schedule:
-    - cron: '0 6 * * *'   # 6 AM UTC daily
+#on:
+ # schedule:
+   # - cron: '0 6 * * *'   # 6 AM UTC daily
   workflow_dispatch:        # lets you trigger manually from the Actions tab
 
 jobs:
