@@ -63,3 +63,14 @@ def get_submission(submission_id: str):
         raise HTTPException(status_code=404, detail=f"Submission '{submission_id}' not found.")
         
     return resp.data[0]
+# add to routers/submissions.py
+@router.get("/case-study/{case_study_id}")
+def list_submissions_for_case(case_study_id: str):
+    resp = (
+        supabase.table("submissions")
+        .select("id, own_analysis, created_at")
+        .eq("case_study_id", case_study_id)
+        .order("created_at", desc=True)
+        .execute()
+    )
+    return {"submissions": resp.data}

@@ -41,6 +41,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ id: 
             >
                 Propose Your Solution
             </Link>
+            
         </main>
     );
 }
