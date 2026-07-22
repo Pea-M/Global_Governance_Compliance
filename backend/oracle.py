@@ -24,14 +24,22 @@ TREATY_FRAMEWORKS = [
 
 # 2. Enforce Strict Output Format for Supabase
 class ComplianceAnalysis(BaseModel):
-    treaties_violated: list[str] = Field(description="List of strings identifying specific laws violated, e.g., ['UN Article 19', 'UNDP SDG Target 16.10']")
-    tactical_solution: str = Field(description="Clear, practical, highly actionable local workaround instructions for citizens or businesses to bypass this technical drop.")
-    policy_reform: str = Field(description="Strategic, high-level governance structural recommendations auditing the implementation gap and actions needed.")
+    treaties_violated: list[str] = Field(
+        description="Each entry cites a specific treaty/article and frames it with historical precedent and real-world impact — written as an expert analyst would, not a bare legal label."
+    )
+    tactical_solution: str = Field(
+        description="Grounded, specific, actionable real-world guidance, written in expert analytical prose, not a generic checklist."
+    )
+    policy_reform: str = Field(
+        description="A closing analytical narrative connecting historical pattern, the current incident, and a forward-looking policy recommendation — read like the final section of an intelligence briefing memo."
+    )
 
 from google import genai
 from google.genai import types
 
-def generate_compliance_brief(anomaly: dict, headlines: list[dict]) -> dict:
+import time
+
+def generate_compliance_brief(anomaly: dict, headlines: list[dict], max_retries: int = 3) -> dict:
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         raise ValueError("Missing GEMINI_API_KEY in environment variables.")
@@ -40,41 +48,79 @@ def generate_compliance_brief(anomaly: dict, headlines: list[dict]) -> dict:
 
     news_text = "\n".join([f"- Title: {h.get('headline')} (Source: {h.get('source_url')})" for h in headlines])
     treaties_text = json.dumps(TREATY_FRAMEWORKS, indent=2)
-    
+
     prompt = f"""
-    You are an expert Autonomous Geopolitical Risk & International Law Compliance AI.
-    Your task is to analyze a technical digital network anomaly against ongoing regional context and international frameworks.
+You are a senior international correspondent and digital-rights analyst —
+the kind who has spent years covering internet governance and censorship
+for an outlet like Reuters or The Economist. You are writing a briefing
+for policy makers and risk analysts. Write with real analytical voice and
+judgment. Do not sound like a compliance checklist or an automated system.
 
-    === TECHNICAL ANOMALY DETECTED ===
-    Target Application: {anomaly.get('target_app')}
-    Failure Type Identified: {anomaly.get('failure_type')}
-    Country Boundary: {anomaly.get('country_code')}
-    Timestamp: {anomaly.get('timestamp')}
+=== INCIDENT SNAPSHOT ===
+Target Application: {anomaly.get('target_app')}
+Failure Type: {anomaly.get('failure_type')}
+Country: {anomaly.get('country_code')}
+Detected: {anomaly.get('timestamp')}
 
-    === LIVE GEOPOLITICAL HEADLINES CONTEXTUALIZATION ===
-    {news_text}
+=== TODAY'S ON-THE-GROUND HEADLINES ===
+{news_text}
 
-    === INTERNATIONAL TREATY REFERENCE MATRIX ===
-    {treaties_text}
+=== TREATY FRAMEWORK REFERENCE ===
+{treaties_text}
 
-    === MANDATORY ANALYSIS INSTRUCTIONS ===
-    1. Determine if the technical failure type combined with the local context constitutes a violation of the referenced international laws.
-    2. Synthesize a practical, immediate 'tactical_solution' explaining how an enterprise or user on the ground can bypass or mitigate this block (e.g., specific routing, decentralized protocols, alternate tooling).
-    3. Generate a macro-level governance and policy critique ('policy_reform') indicating what oversight rules have failed and what remediation is required.
-    4. Guardrail: Rely strictly on the technical data and news context provided. Avoid generic conversational fluff.
-    """
+=== YOUR BRIEFING TASK ===
+Connect today's technical signal to the larger story — this is a briefing,
+not a snapshot.
 
+1. treaties_violated: For each law or article implicated, frame it with
+   precedent, not just a citation. Note the broader pattern this fits
+   (e.g. how this kind of app-specific throttling has historically been used
+   around moments of unrest or political sensitivity in this country), and
+   briefly note the real-world harm this kind of blocking tends to cause —
+   cut-off communication during protests, disrupted independent reporting,
+   families unable to reach each other.
 
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=ComplianceAnalysis,
-        ),
-    )
-    return json.loads(response.text)
-    
+2. tactical_solution: Practical, specific, ground-level guidance — actual
+   tools or protocols a person or business could use right now, not a
+   generic "use a VPN."
+
+3. policy_reform: Write this like the closing section of a real briefing
+   memo — the arc from historical pattern, to today's incident, to what's
+   likely next, and what concrete oversight change would actually alter
+   that trajectory.
+
+Guardrails:
+- Ground every specific, checkable claim in what's provided above (this
+  incident's data, today's headlines).
+- You may draw on broadly known historical patterns to give this real
+  analytical depth, but never invent specific dates, statistics, or direct
+  quotes you are not confident are accurate. If you're not certain of a
+  specific detail, speak to the general pattern rather than a fabricated
+  instance.
+- Write in flowing, analytical prose. No bullet-point robotic language,
+  no "in conclusion," no generic filler.
+"""
+    last_error = None
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-3.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    response_schema=ComplianceAnalysis,
+                ),
+            )
+            return json.loads(response.text)
+        except Exception as e:
+            last_error = e
+            if attempt < max_retries - 1:
+                wait = 5 * (attempt + 1)
+                print(f"⚠️ Gemini call failed (attempt {attempt+1}/{max_retries}): {e}. Retrying in {wait}s...")
+                time.sleep(wait)
+    assert last_error is not None
+    raise last_error
+
 
 # =====================================================================
 # TESTING BLOCK: Runs only if you execute `python oracle.py` directly

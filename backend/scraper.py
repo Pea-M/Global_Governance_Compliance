@@ -1,3 +1,4 @@
+import time
 import requests
 from datetime import datetime, timedelta, timezone
 # temporary, don't leave this in scraper.py permanently
@@ -11,7 +12,18 @@ APP_NAMES = {
     "whatsapp": "WhatsApp",
     "web_connectivity": "Website",
 }
-
+def get_unique_anomalies(raw_anomalies: list[dict], max_incidents: int = 3) -> list[dict]:
+    """Dedupe OONI's many raw measurements into one representative incident per distinct app."""
+    seen_apps = set()
+    unique = []
+    for m in raw_anomalies:
+        normalized = normalize_ooni_result(m)
+        if normalized["target_app"] not in seen_apps:
+            seen_apps.add(normalized["target_app"])
+            unique.append(normalized)
+        if len(unique) >= max_incidents:
+            break
+    return unique
 
 def fetch_ooni_anomalies(country_code: str, hours: int = 24) -> list[dict]:
     since = (datetime.now(timezone.utc) - timedelta(hours=hours)).strftime("%Y-%m-%d")
@@ -46,14 +58,16 @@ def normalize_ooni_result(m: dict) -> dict:
     }
 
 
-import time # <--- ADD THIS
 
-def fetch_gdelt_headlines(country_code_fips: str, max_records: int = 5) -> list[dict]:
+def fetch_gdelt_headlines(country_code_fips: str, keyword: str = "", max_records: int = 3) -> list[dict]:
+    query = f"sourcecountry:{country_code_fips}"
+    if keyword:
+        query += f" {keyword}"
     url = "https://api.gdeltproject.org/api/v2/doc/doc"
     # Adding a header to identify as a browser, which reduces block probability
     headers = {'User-Agent': 'Mozilla/5.0'} 
     params = {
-        "query": f"sourcecountry:{country_code_fips}",
+        "query": query,
         "mode": "artlist",
         "maxrecords": max_records,
         "format": "json",

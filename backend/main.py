@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client, Client
-
+from routers import case_studies, submissions, critiques
 # Load .env variables (SUPABASE_URL, SUPABASE_SERVICE_KEY)
 load_dotenv()
 
@@ -13,6 +13,13 @@ app = FastAPI(
     description="Surfaces network anomaly incidents and AI-generated compliance reports.",
     version="0.1.0",
 )
+
+# -----------------------------------------------------------------
+# Routers
+# -----------------------------------------------------------------
+app.include_router(case_studies.router)
+app.include_router(submissions.router)
+app.include_router(critiques.router)
 
 # -----------------------------------------------------------------
 # CORS — allow local Next.js dev server

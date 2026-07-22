@@ -1,0 +1,32 @@
+
+> frontend@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+Failed to compile.
+
+./src/app/case-studies/[id]/page.tsx
+Module not found: Can't resolve '@/components/CaseStudyHeader'
+
+https://nextjs.org/docs/messages/module-not-found
+
+./src/app/case-studies/[id]/page.tsx
+Module not found: Can't resolve '@/components/Timeline'
+
+https://nextjs.org/docs/messages/module-not-found
+
+./src/app/case-studies/[id]/result/[submissionId]/page.tsx
+Module not found: Can't resolve '@/components/CritiqueResult'
+
+https://nextjs.org/docs/messages/module-not-found
+
+./src/app/case-studies/[id]/submit/page.tsx
+Module not found: Can't resolve '@/components/SolutionForm'
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+> Build failed because of webpack errors
