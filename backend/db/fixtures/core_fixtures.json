@@ -1,0 +1,137 @@
+{
+  "anomaly_events": [
+    {
+      "id": "73b648fa-891d-48bb-bb8f-891ef64b8a4a",
+      "timestamp": "2026-07-17T15:00:00Z",
+      "country_code": "IN",
+      "failure_type": "infrastructure",
+      "target_app": "vahan_portal"
+    }
+  ],
+  "case_studies": [
+    {
+      "id": "ed36fca2-8df2-482a-8756-ef2039ba39a1",
+      "title": "Noida Labor Protest & Civil Unrest",
+      "category": "civil_unrest",
+      "status": "resolved",
+      "event_date": "2026-06-25",
+      "location": "Noida",
+      "deaths": 0,
+      "affected": 500,
+      "cause": "Dispute over unpaid wages and labor conditions",
+      "region_affected": "NCR",
+      "created_at": "2026-07-17T12:00:00Z"
+    }
+  ],
+  "news_contexts": [
+    {
+      "id": "a1111111-1111-1111-1111-111111111111",
+      "anomaly_id": "73b648fa-891d-48bb-bb8f-891ef64b8a4a",
+      "headline": "Mass demonstrations in Noida over labor wage disparities and worker rights",
+      "source_url": "https://example.com/news/noida-labor-protest"
+    }
+  ],
+  "compliance_reports": [
+    {
+      "id": "b2222222-2222-2222-2222-222222222222",
+      "anomaly_id": "73b648fa-891d-48bb-bb8f-891ef64b8a4a",
+      "treaties_violated": "Industrial Disputes Act, 1947",
+      "tactical_solution": "Establish immediate mediation channels between labor unions and firm management.",
+      "policy_reform": "Enhance regulatory oversight on wage payment timelines for industrial units."
+    }
+  ],
+  "timeline_events": [
+    {
+      "id": "c3333333-3333-3333-3333-333333333333",
+      "case_study_id": "ed36fca2-8df2-482a-8756-ef2039ba39a1",
+      "event_timestamp": "2026-06-25T10:00:00Z",
+      "responsible_actor": "Labor Unions",
+      "description": "Initial gathering of workers at the industrial site leading to road blockades."
+    }
+  ],
+  "legal_references": [
+    {
+      "id": "d4444444-4444-4444-4444-444444444444",
+      "case_study_id": "ed36fca2-8df2-482a-8756-ef2039ba39a1",
+      "ref_type": "policy",
+      "title": "Industrial Disputes Act, 1947",
+      "description": "Governs the resolution of industrial disputes and protection of worker collective bargaining rights."
+    }
+  ],
+  "media_items": [
+    {
+      "id": "e5555555-5555-5555-5555-555555555555",
+      "case_study_id": "ed36fca2-8df2-482a-8756-ef2039ba39a1",
+      "type": "photo",
+      "source_attribution": "Local Media Documentation",
+      "url": "https://example.com/storage/media/noida_protest_01.png"
+    }
+  ],
+  "historical_outcomes": [
+    {
+      "case_study_id": "ed36fca2-8df2-482a-8756-ef2039ba39a1",
+      "immediate_actions": [
+        "Police intervention for traffic management",
+        "Tripartite meeting scheduled"
+      ],
+      "committees_formed": [
+        "Labor Welfare Conciliation Committee"
+      ],
+      "final_reforms": [
+        "Mandatory wage audit reporting"
+      ],
+      "after_effects": [
+        "Reduction in localized industrial grievances"
+      ]
+    }
+  ],
+  "submissions": [
+    {
+      "id": "9bfad3c4-4d87-4d7a-8f3e-5262f2700a44",
+      "case_study_id": "ed36fca2-8df2-482a-8756-ef2039ba39a1",
+      "user_id": "c56a4180-65aa-42ec-a945-5fd21dec0538",
+      "own_analysis": "The civil unrest in Noida highlights systemic gaps in labor law enforcement within industrial hubs.",
+      "immediate_action": [
+        "Wage disbursement transparency",
+        "Labor council empowerment"
+      ],
+      "problem_highlights": [
+        "Delayed salary payments",
+        "Inadequate grievance redressal"
+      ],
+      "constitutional_refs": [
+        "Article 23 - Prohibition of trafficking and forced labor"
+      ],
+      "policy_reforms": [
+        "Digital payroll compliance monitoring"
+      ],
+      "created_at": "2026-07-17T14:00:00Z"
+    }
+  ],
+  "ai_critiques": [
+    {
+      "submission_id": "9bfad3c4-4d87-4d7a-8f3e-5262f2700a44",
+      "summary_of_user_idea": "User identifies labor law enforcement as the primary failure point, suggesting digital payroll monitoring.",
+      "future_prediction": {
+        "expected_stability_improvement": "High"
+      },
+      "pros_cons_additions_deletions": {
+        "pros": [
+          "Direct accountability",
+          "Automated compliance"
+        ],
+        "cons": [
+          "Requires infrastructure upgrade in small factories"
+        ],
+        "additions": [
+          "Include a worker-to-government direct reporting portal"
+        ]
+      },
+      "comparison_to_reality": {
+        "alignment_coefficient": 0.92,
+        "historical_precedent_match": true
+      },
+      "created_at": "2026-07-17T14:05:00Z"
+    }
+  ]
+}

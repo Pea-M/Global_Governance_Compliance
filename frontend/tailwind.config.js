@@ -1,1 +1,8 @@
-// Tailwind CSS configuration: content paths, theme extensions, and plugins
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: { extend: {} },
+  plugins: [],
+};
