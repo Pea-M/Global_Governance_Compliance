@@ -1,10 +1,11 @@
 # routers/submissions.py
 # FastAPI router for user submission endpoints.
 # Implementation begins in Phase 1.
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header
 from pydantic import BaseModel, Field
 from typing import List
 from core.supabase_client import supabase
+from core.auth import get_user_id_from_token
 
 router = APIRouter(prefix="/api/v1/submissions", tags=["submissions"])
 
@@ -20,11 +21,14 @@ class SubmissionCreate(BaseModel):
 
 # 2. Define the POST Route
 @router.post("/")
-def create_submission(payload: SubmissionCreate):
+def create_submission(payload: SubmissionCreate, authorization: str = Header(None)):
     try:
+        user_id = get_user_id_from_token(authorization)
+        
         # payload.model_dump() converts the Pydantic object into a native Python dictionary.
         # FastAPI handles the conversion of Python Lists to JSONB automatically for Supabase.
         insert_data = payload.model_dump()
+        insert_data["user_id"] = user_id  # override with actual authenticated user
         
         # Execute the insert
         resp = supabase.table("submissions").insert(insert_data).execute()
@@ -51,6 +55,19 @@ def create_submission(payload: SubmissionCreate):
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {error_msg}")
 
 
+@router.get("/mine")
+def list_my_submissions(authorization: str = Header(None)):
+    user_id = get_user_id_from_token(authorization)
+    resp = (
+        supabase.table("submissions")
+        .select("id, case_study_id, own_analysis, created_at")
+        .eq("user_id", user_id)
+        .order("created_at", desc=True)
+        .execute()
+    )
+    return {"submissions": resp.data}
+
+
 # 3. (Optional) Define a GET Route to fetch a specific submission
 @router.get("/{submission_id}")
 def get_submission(submission_id: str):
@@ -74,3 +91,17 @@ def list_submissions_for_case(case_study_id: str):
         .execute()
     )
     return {"submissions": resp.data}
+
+
+@router.get("/user/{user_id}")
+def list_submissions_for_user(user_id: str):
+    """Returns all submissions by a given user, newest first."""
+    resp = (
+        supabase.table("submissions")
+        .select("id, case_study_id, own_analysis, created_at")
+        .eq("user_id", user_id)
+        .order("created_at", desc=True)
+        .execute()
+    )
+    return {"submissions": resp.data}
+

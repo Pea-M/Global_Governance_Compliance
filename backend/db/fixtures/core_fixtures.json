@@ -21,6 +21,19 @@
       "cause": "Dispute over unpaid wages and labor conditions",
       "region_affected": "NCR",
       "created_at": "2026-07-17T12:00:00Z"
+    },
+    {
+      "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "title": "The Chernobyl Nuclear Power Plant Disaster",
+      "category": "disaster",
+      "status": "resolved",
+      "event_date": "1986-04-26",
+      "location": "Chernobyl Nuclear Power Plant (Unit 4), near Pripyat, Ukrainian SSR",
+      "deaths": 31,
+      "affected": 5000000,
+      "cause": "Severe RBMK-1000 reactor design flaws (positive void coefficient and graphite-tipped control rods), exacerbated by operational procedure violations and poor safety culture during a low-power turbine test.",
+      "region_affected": "Ukrainian SSR, Byelorussian SSR, Russian SFSR; atmospheric fallout across Northern, Central, and Western Europe",
+      "created_at": "2026-07-23T00:00:00Z"
     }
   ],
   "news_contexts": [
@@ -47,6 +60,69 @@
       "event_timestamp": "2026-06-25T10:00:00Z",
       "responsible_actor": "Labor Unions",
       "description": "Initial gathering of workers at the industrial site leading to road blockades."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000001",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-04-25T01:06:00Z",
+      "responsible_actor": "Plant Operators",
+      "description": "Safety test preparation begins; reactor power reduction starts for scheduled turbine generator rundown test."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000002",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-04-25T14:00:00Z",
+      "responsible_actor": "Plant Operators",
+      "description": "Emergency Core Cooling System (ECCS) manually disabled to prevent interference with the test; reactor left running at 50% power with safety systems disabled for over 9 hours due to grid delay request."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000003",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-04-26T01:23:04Z",
+      "responsible_actor": "Plant Operators",
+      "description": "Low-power turbine rundown test initiated; coolant flow decreases, causing steam voids to form and reactivity to increase due to the RBMK's positive void coefficient."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000004",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-04-26T01:23:40Z",
+      "responsible_actor": "Plant Operators",
+      "description": "Emergency shutdown (AZ-5) pressed; graphite-tipped control rods displace coolant before insertion, causing a sudden localized reactivity spike at the bottom of the core."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000005",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-04-26T01:23:44Z",
+      "responsible_actor": "Reactor Core",
+      "description": "Core power spikes over 100x operational limit; steam explosion lifts the 2,000-ton reactor lid, followed by a hydrogen/thermal explosion that destroys the reactor building and ignites the graphite moderator."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000006",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-04-27T14:00:00Z",
+      "responsible_actor": "Soviet Government",
+      "description": "Evacuation of Pripyat's 49,000 residents ordered, 36 hours after the explosion; residents given 2 hours to gather belongings under the guise of a temporary 3-day evacuation."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000007",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-04-28T09:00:00Z",
+      "responsible_actor": "Forsmark Nuclear Power Plant, Sweden",
+      "description": "Swedish monitors detect elevated radiation levels 1,100 km away; after ruling out an internal leak, authorities trace wind patterns to the Soviet Union."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000008",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-04-28T21:00:00Z",
+      "responsible_actor": "TASS (Soviet State News Agency)",
+      "description": "First public acknowledgment of the disaster: a 20-second statement confirming an accident occurred, with no mention of its true severity."
+    },
+    {
+      "id": "a1000001-0000-0000-0000-000000000009",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "event_timestamp": "1986-05-01T00:00:00Z",
+      "responsible_actor": "Soviet Government / Liquidators",
+      "description": "Mobilization of over 600,000 Liquidators to extinguish graphite fires, drop boron/lead/sand by helicopter, and begin constructing the first concrete-and-steel enclosure (the Sarcophagus), completed November 1986."
     }
   ],
   "legal_references": [
@@ -56,6 +132,41 @@
       "ref_type": "policy",
       "title": "Industrial Disputes Act, 1947",
       "description": "Governs the resolution of industrial disputes and protection of worker collective bargaining rights."
+    },
+    {
+      "id": "b2000001-0000-0000-0000-000000000001",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "ref_type": "policy",
+      "title": "Gosatomenergonadzor (State Committee for Atomic Energy Safety, 1983)",
+      "description": "Soviet civilian nuclear regulatory body in force at the time of the accident; lacked independent authority to enforce compliance or override decisions made by the Ministry of Medium Machine Building (Sredmash)."
+    },
+    {
+      "id": "b2000001-0000-0000-0000-000000000002",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "ref_type": "framework",
+      "title": "IAEA INSAG-1 (1986)",
+      "description": "Initial post-accident international review, which attributed primary responsibility to operator error and safety rule violations."
+    },
+    {
+      "id": "b2000001-0000-0000-0000-000000000003",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "ref_type": "framework",
+      "title": "IAEA INSAG-7 (1992)",
+      "description": "Revised international review establishing that the primary root causes were systemic reactor design flaws, poor regulatory oversight, and an absence of institutional safety culture \u2014 superseding INSAG-1's operator-blame framing."
+    },
+    {
+      "id": "b2000001-0000-0000-0000-000000000004",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "ref_type": "treaty",
+      "title": "Convention on Early Notification of a Nuclear Accident (1986)",
+      "description": "Post-Chernobyl treaty formally obligating states to immediately report transboundary nuclear incidents."
+    },
+    {
+      "id": "b2000001-0000-0000-0000-000000000005",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "ref_type": "treaty",
+      "title": "Convention on Nuclear Safety (1994)",
+      "description": "Established international benchmark safety standards and peer-review mandates for civilian nuclear reactors worldwide."
     }
   ],
   "media_items": [
@@ -65,6 +176,20 @@
       "type": "photo",
       "source_attribution": "Local Media Documentation",
       "url": "https://example.com/storage/media/noida_protest_01.png"
+    },
+    {
+      "id": "c3000001-0000-0000-0000-000000000001",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "type": "report",
+      "source_attribution": "TASS (Telegraph Agency of the Soviet Union), April 28, 1986",
+      "url": "https://en.wikipedia.org/wiki/Chernobyl_disaster"
+    },
+    {
+      "id": "c3000001-0000-0000-0000-000000000002",
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "type": "photo",
+      "source_attribution": "Igor Kostin, Novosti Press Agency \u2014 first aerial photograph of the destroyed reactor, April 26, 1986",
+      "url": "https://commons.wikimedia.org/wiki/Category:Chernobyl_disaster"
     }
   ],
   "historical_outcomes": [
@@ -82,6 +207,30 @@
       ],
       "after_effects": [
         "Reduction in localized industrial grievances"
+      ]
+    },
+    {
+      "case_study_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "immediate_actions": [
+        "Delayed evacuation of Pripyat's 49,000 residents, 36 hours after the explosion",
+        "Mobilization of 600,000 Liquidators to fight graphite fires and clear radioactive debris",
+        "Construction of the first Object Shelter (Sarcophagus), completed November 1986"
+      ],
+      "committees_formed": [
+        "Establishment of the 30-Kilometer Chernobyl Exclusion Zone administration",
+        "IAEA International Nuclear Safety Advisory Group (INSAG)"
+      ],
+      "final_reforms": [
+        "Convention on Early Notification of a Nuclear Accident (1986)",
+        "Convention on Nuclear Safety (1994)",
+        "Systematic retrofit of all remaining RBMK reactors to eliminate positive void reactivity risk",
+        "Adoption of 'Safety Culture' as a foundational requirement in high-hazard industrial and nuclear management globally"
+      ],
+      "after_effects": [
+        "Permanent relocation of over 350,000 residents",
+        "Over 6,000 thyroid cancer cases observed among those exposed as children",
+        "New Safe Confinement structure completed in 2016, a $2.1 billion internationally-funded arch enabling safe remote disassembly of the damaged core",
+        "Widely credited as a catalyst accelerating Gorbachev's Glasnost policy of political openness"
       ]
     }
   ],

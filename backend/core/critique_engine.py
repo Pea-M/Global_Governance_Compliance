@@ -60,6 +60,7 @@ def generate_critique(
     case_study: dict,
     legal_references: list[dict],
     historical_outcome: dict | None,
+    max_retries: int = 3,
 ) -> dict:
     """
     Guardrails (PLANNING.md Section 2.9):
@@ -114,16 +115,26 @@ If unsure of a specific detail, speak to the general pattern rather than
 fabricating a specific.
 """
 
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=CritiqueAnalysis,
-        ),
-    )
-
-    result = json.loads(response.text)
-    if not is_resolved:
-        result["reality_comparison"] = None
-    return result
+    last_error = None
+    import time
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-3.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    response_schema=CritiqueAnalysis,
+                ),
+            )
+            result = json.loads(response.text)
+            if not is_resolved:
+                result["reality_comparison"] = None
+            return result
+        except Exception as e:
+            last_error = e
+            if attempt < max_retries - 1:
+                wait = 5 * (attempt + 1)
+                print(f"⚠️ Gemini call failed (attempt {attempt+1}/{max_retries}): {e}. Retrying in {wait}s...")
+                time.sleep(wait)
+    raise last_error or RuntimeError("Generative call failed mysteriously with no exception caught.")
